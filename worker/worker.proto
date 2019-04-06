@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package worker.api;
+
+// 定义服务接口
+service WorkerService{
+    rpc SetData(SetDataRequest) returns (SetDataReply){}
+    rpc GetData(GetDataRequest) returns (GetDataReply){}
+}
+
+message SetDataRequest{
+    int32 type = 1;
+    string content = 2;
+}
+
+message SetDataReply{
+    int32 status = 1;
+    string msg = 2;
+}
+
+message GetDataRequest{
+    int32 type = 1;
+}
+
+message GetDataReply{
+    string msg = 1;
+}
