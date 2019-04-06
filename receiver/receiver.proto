@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+// option go_package = "github.com/palanceli/MVCSample/receiver;receiverpb";
+package receiver.api;
+
+// 定义服务接口
+service ReceiverService{
+    rpc ReceiveData(ReceiveDataRequest) returns (ReceiveDataReply){}
+}
+
+message ReceiveDataRequest{
+    int32 type = 1;
+    string content = 2;
+}
+
+message ReceiveDataReply{
+    int32 status = 1;
+    string msg = 2;
+}

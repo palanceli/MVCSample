@@ -1,0 +1,6 @@
+{
+    "terminal.integrated.fontWeightBold": "100",
+    "terminal.integrated.fontFamily": " 'Courier New', monospace",
+    "terminal.integrated.fontWeight": "100",
+    "go.testFlags": ["-v"],
+}
