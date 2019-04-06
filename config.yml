@@ -1,0 +1,2 @@
+receiver_grpc_addr: ":50061"
+worker_grpc_addr: ":50062"
