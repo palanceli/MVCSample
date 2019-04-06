@@ -1,2 +1,4 @@
 receiver_grpc_addr: ":50061"
 worker_grpc_addr: ":50062"
+worker_redis_addr: "redis://:@127.0.0.1:6379"
+worker_mysql_addr: "root:@tcp(127.0.0.1:3306)/workerdb?charset=utf8"
