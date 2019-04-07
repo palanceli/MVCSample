@@ -62,9 +62,6 @@ func main() {
 	glog.Infof("config:%+v", cfg)
 	glog.Flush()
 
-	redisClient := initRedis(cfg)
-	mysqlEngine := initMySQL(cfg)
-
-	grpcServer := grpc.NewServer(cfg, redisClient, mysqlEngine)
+	grpcServer := grpc.NewServer(cfg)
 	grpcServer.Run(serverhelper.SignalContext(context.Background()))
 }
