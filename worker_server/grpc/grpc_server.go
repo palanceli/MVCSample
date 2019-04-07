@@ -22,6 +22,7 @@ const maxsize = 1024 * 1024 * 10
 // Server ...
 type Server struct {
 	cfg         *config.WorkerConfig
+	worker      *worker.Worker
 	redisClient *redis.Client
 	mysqlEngine *xorm.Engine
 }
@@ -29,7 +30,7 @@ type Server struct {
 // SetData ...
 func (s *Server) SetData(ctx context.Context, request *worker_api.SetDataRequest) (*worker_api.SetDataReply, error) {
 	glog.Infof("Set data (Type=%d, content=%s)", request.Type, request.Content)
-	err := worker.SetData(request.Type, request.Content, s.redisClient, s.mysqlEngine, s.cfg.ReceiverGrpcAddr)
+	err := s.worker.SetData(request.Type, request.Content)
 	if err != nil {
 		glog.Fatalf("FAILED to SetData. err=%v", err)
 	}
@@ -39,7 +40,7 @@ func (s *Server) SetData(ctx context.Context, request *worker_api.SetDataRequest
 // GetData ...
 func (s *Server) GetData(ctx context.Context, request *worker_api.GetDataRequest) (*worker_api.GetDataReply, error) {
 	glog.Infof("Get data (Type=%d)", request.Type)
-	content, err := worker.GetData(request.Type, s.redisClient)
+	content, err := s.worker.GetData(request.Type)
 	if err != nil {
 		glog.Fatalf("FAILED to GetData. err=%v", err)
 	}
@@ -48,11 +49,10 @@ func (s *Server) GetData(ctx context.Context, request *worker_api.GetDataRequest
 }
 
 // NewServer ...
-func NewServer(cfg *config.WorkerConfig, redisClient *redis.Client, mysqlEngine *xorm.Engine) *Server {
+func NewServer(cfg *config.WorkerConfig) *Server {
 	return &Server{
-		cfg:         cfg,
-		redisClient: redisClient,
-		mysqlEngine: mysqlEngine,
+		cfg:    cfg,
+		worker: worker.CreateWorker(cfg),
 	}
 }
 
