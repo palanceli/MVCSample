@@ -12,12 +12,9 @@ import (
 var configFilePath string
 var globalConfig atomic.Value
 
-func init() {
-	flag.StringVar(&configFilePath, "conf", "", "configuration file path")
-}
-
 // Initialize 会从configFilePath文件中读取yaml配置
-func Initialize(config interface{}) interface{} {
+func Initialize(filePath string, config interface{}) interface{} {
+	configFilePath = filePath
 	if !flag.Parsed() {
 		flag.Parse()
 	}
